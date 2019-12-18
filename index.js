@@ -15,7 +15,7 @@ app.get('/', function(req,res){
 
 app.post('/api/send', function(req,res){
 	const idRfid = req.body.id_rfid
-	var dateNow  =  dateFormat(new Date(), "d m yyyy H:m:s")
+	var dateNow  =  dateFormat(new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }), "d m yyyy H:M:ss")
 
 	// Parsing format to Indonesia Format 
 	dateNow = dateToIndo(dateNow)
