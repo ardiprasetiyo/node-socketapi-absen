@@ -2,7 +2,9 @@
 const app = require('express')()
 const http = require('http').createServer(app)
 const bodyParser = require('body-parser')
-const io = require('socket.io')(http);
+const io = require('socket.io')(http)
+const dateFormat = require('dateformat')
+const dateToIndo = require('./date2indo.js')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended : false }))
@@ -12,9 +14,13 @@ app.get('/', function(req,res){
 })
 
 app.post('/api/send', function(req,res){
-	const data = req.body.name
-	console.log(data);
-	io.emit('test', data)
+	const idRfid = req.body.id_rfid
+	var dateNow  =  dateFormat(new Date(), "d m yyyy H:m:s")
+
+	// Parsing format to Indonesia Format 
+	dateNow = dateToIndo(dateNow)
+
+	io.emit('test', {'id_rfid' : idRfid, 'datetime' : dateNow})
 	res.send("OK!")
 })
 
