@@ -11,10 +11,9 @@
 		var socket = io();
 
 		socket.on('test', function(msg){
-			console.log(JSON.parse(msg))
-			const nama = JSON.parse(msg).nama
-			const kelas = JSON.parse(msg).kelas
-			alert("Namaku " + nama + " Dari Kelas " + kelas);
+			const rfid = msg.id_rfid;
+			const date = msg.datetime;
+			alert(`RFID : ${rfid}, Date : ${date}`);
 		})
 	</script>
 </body>

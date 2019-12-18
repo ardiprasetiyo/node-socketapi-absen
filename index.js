@@ -20,8 +20,10 @@ app.post('/api/send', function(req,res){
 	// Parsing format to Indonesia Format 
 	dateNow = dateToIndo(dateNow)
 
-	io.emit('test', {'id_rfid' : idRfid, 'datetime' : dateNow})
-	res.send("OK!")
+	JSONResponse =  {'id_rfid' : idRfid, 'datetime' : dateNow}
+
+	io.emit('test',JSONResponse)
+	res.send(JSONResponse)
 })
 
 
