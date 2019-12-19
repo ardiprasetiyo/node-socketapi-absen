@@ -5,12 +5,12 @@
 	<script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-	<h1>Hello!</h1>
+	<h1>API TESTING</h1>
 	<script>
 		console.log(io());
 		var socket = io();
 
-		socket.on('test', function(msg){
+		socket.on('rfid-reader', function(msg){
 			const rfid = msg.id_rfid;
 			const date = msg.datetime;
 			alert(`RFID : ${rfid}, Date : ${date}`);
