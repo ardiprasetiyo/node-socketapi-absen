@@ -10,9 +10,9 @@
 		console.log(io());
 		var socket = io();
 
-		socket.on('test', function(callbacks){
-			const rfid = callbacks.id_rfid;
-			const date = callbacks.datetime;
+		socket.on('test', function(msg){
+			const rfid = msg.id_rfids;
+			const date = msg.datetime;
 			alert(`RFID : ${rfid}, Date : ${date}`);
 		})
 	</script>
