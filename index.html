@@ -11,7 +11,7 @@
 		var socket = io();
 
 		socket.on('test', function(msg){
-			const rfid = msg.id_rfids;
+			const rfid = msg.id_rfid;
 			const date = msg.datetime;
 			alert(`RFID : ${rfid}, Date : ${date}`);
 		})

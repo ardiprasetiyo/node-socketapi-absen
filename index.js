@@ -1,16 +1,25 @@
-
+// Node Module
 const app = require('express')()
 const http = require('http').createServer(app)
 const bodyParser = require('body-parser')
 const io = require('socket.io')(http)
-// Security Module
-const forceHTTPS = require('./https-redirection.js')
-// Date Module
 const dateFormat = require('dateformat')
-const dateToIndo = require('./date2indo.js')
 
 
-app.use(forceHTTPS) // Force Redirect HTTP Request to HTTPS Request
+// Force HTTPS Redirection
+app.use(function(req, res, next) {
+    if (process.env.NODE_ENV === 'production') {
+        if (req.headers['x-forwarded-proto'] != 'https') {
+            return res.redirect('https://' + req.headers.host + req.url);
+        } else {
+            return next();
+        }
+    } else {
+        return next();
+    }
+});
+
+// Using Middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended : false }))
 
@@ -18,13 +27,10 @@ app.get('/', function(req,res){
 	res.sendFile(__dirname + '/index.html')
 })
 
+// Routing
 app.post('/api/send', function(req,res){
 	const idRfid = req.body.id_rfid
-	var dateNow  =  dateFormat(new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }), "d m yyyy H:M:ss")
-
-	// Parsing format to Indonesia Format 
-	dateNow = dateToIndo(dateNow)
-
+	var dateNow  =  dateFormat(new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }), "d mmmm yyyy H:M:ss")
 	JSONResponse =  {'id_rfid' : idRfid, 'datetime' : dateNow}
 
 	io.emit('test',JSONResponse)
@@ -32,6 +38,7 @@ app.post('/api/send', function(req,res){
 })
 
 
+// Socket IO Connection
 io.on('connection', function(socket){
 	console.log('A User Has Been Connected');
 	socket.on('test', function(msg){
