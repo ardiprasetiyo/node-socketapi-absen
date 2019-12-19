@@ -3,9 +3,15 @@ const app = require('express')()
 const http = require('http').createServer(app)
 const bodyParser = require('body-parser')
 const io = require('socket.io')(http)
+
+// Date Library
 const dateFormat = require('dateformat')
 const dateToIndo = require('./date2indo.js')
 
+// Security Library
+const forceHTTPS = require("expressjs-force-https").forceHTTPS;
+
+app.use(forceHTTPS) // Force Redirect HTTP Request to HTTPS Request
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended : false }))
 
