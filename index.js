@@ -6,7 +6,7 @@ const io = require('socket.io')(http)
 const dateFormat = require('dateformat')
 
 
-// Force HTTPS Redirection
+// Force HTTPS Redirection ( Heroku Only )
 app.use(function(req, res, next) {
     if (process.env.NODE_ENV === 'production') {
         if (req.headers['x-forwarded-proto'] != 'https') {
