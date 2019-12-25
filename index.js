@@ -49,7 +49,6 @@ app.get('/', function(req,res){
 // READ RFID DATA
 
 app.post('/api/rfid', function(req,res){
-	console.log(fakerHelper)
 	const rfidID = req.body.id_rfid
 	const deviceID = req.body.id_device
 
